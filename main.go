@@ -3,14 +3,40 @@ package main
 import "fmt"
 
 func main() {
-	// Using formatted string
-	var age uint8 = 25
-	var name = "Gabriel"
-	fmt.Printf("My name is %v and I am %v years old\n", name, age)
+	// Arrays are statically typed, what I mean is that, once set you can not change it's length
 
-	// Saving formatted string
-	var str = fmt.Sprintf("My name it is not %v and I am not %v years old\n", name, age)
+	// First way to declare an array...
+	var names [3]string = [3]string{"Gabriel", "João", "Thor"}
 
-	// Printing it
-	fmt.Print(str)
+	// Printing the array
+	fmt.Println(names)
+
+	// Second and shorter way to declare an array...
+	var numbers = [3]int{1, 2, 3}
+	fmt.Println(numbers)
+
+	// Third and even shorter...
+	ages := [5]int{15, 18, 25, 31, 65}
+	fmt.Println(ages)
+
+	// That's how you change items from  it...
+	ages[2] = 1000
+	fmt.Println(ages)
+
+	// Slices (Uses arrays under the hood) they don't need to have a size specified
+
+	// Example...
+	var sliceExample = []int{1, 2, 3}
+	fmt.Println(sliceExample)
+
+	// Append an item an assigning it to the older slice
+	sliceExample = append(sliceExample, 6969)
+	fmt.Println(sliceExample, len(sliceExample))
+
+	// Ranges...
+	range1 := names[1:2]
+	range2 := names[:2]
+	range3 := names[1:]
+
+	fmt.Println(range1, range2, range3)
 }
