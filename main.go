@@ -3,40 +3,30 @@ package main
 import "fmt"
 
 func main() {
-	// Arrays are statically typed, what I mean is that, once set you can not change it's length
+	// Simple for loop, looks more like a while loop to me but yep...
+	x := 0
+	for x < 3 {
+		x++
+		fmt.Println("The value of x is: ", x)
+	}
 
-	// First way to declare an array...
-	var names [3]string = [3]string{"Gabriel", "João", "Thor"}
+	fmt.Println("")
 
-	// Printing the array
-	fmt.Println(names)
+	// This one looks more like a for loop hehe...
+	for y := 0; y < 3; y++ {
+		fmt.Println("The value of y is: ", y)
+	}
 
-	// Second and shorter way to declare an array...
-	var numbers = [3]int{1, 2, 3}
-	fmt.Println(numbers)
+	fmt.Println("")
 
-	// Third and even shorter...
-	ages := [5]int{15, 18, 25, 31, 65}
-	fmt.Println(ages)
+	// Looping through a slice...
+	var names []string = []string{"John", "Gabriel", "Carla", "Robert"}
+	for i := 0; i < len(names); i++ {
+		fmt.Printf("The %v° name is: %v\n", i+1, names[i])
+	}
 
-	// That's how you change items from  it...
-	ages[2] = 1000
-	fmt.Println(ages)
-
-	// Slices (Uses arrays under the hood) they don't need to have a size specified
-
-	// Example...
-	var sliceExample = []int{1, 2, 3}
-	fmt.Println(sliceExample)
-
-	// Append an item an assigning it to the older slice
-	sliceExample = append(sliceExample, 6969)
-	fmt.Println(sliceExample, len(sliceExample))
-
-	// Ranges...
-	range1 := names[1:2]
-	range2 := names[:2]
-	range3 := names[1:]
-
-	fmt.Println(range1, range2, range3)
+	//Another way of doing it
+	for i := range names {
+		fmt.Printf("The %v° name is: %v\n", i+1, names[i])
+	}
 }
