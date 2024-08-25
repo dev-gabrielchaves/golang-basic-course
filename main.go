@@ -2,18 +2,26 @@ package main
 
 import "fmt"
 
-func main() {
+func greeting(name string) {
+	fmt.Printf("Hello %v!\n", name)
+}
 
-	whatever := []string{"Jump me", "Jump me", "Hey!", "Jump me", "Hello beautiful world!", "Break here", "I should not come up!"}
+func sayBye(name string) {
+	fmt.Printf("Bye %v!\n", name)
+}
 
-	for i := range whatever {
-		if whatever[i] == "Jump me" {
-			continue
-		} else if whatever[i] == "Break here" {
-			fmt.Println()
-			break
-		} else {
-			fmt.Print(whatever[i] + " ")
-		}
+func loopThrough(names []string, function func(string)) {
+	for i := range names {
+		function(names[i])
 	}
+}
+
+func main() {
+	names := []string{"John", "Gabriel", "Robert", "Carla"}
+
+	loopThrough(names, greeting)
+
+	fmt.Println()
+
+	loopThrough(names, sayBye)
 }
