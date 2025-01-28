@@ -1,9 +1,27 @@
 package main
 
-// fmt stands for the Format package. This package allows to format basic strings, values, or anything and print them or...
-// collect user input from the console, or write into a file using a writer or even print customized fancy error messages.
-import "fmt"
+import (
+	"log"
+
+	"github.com/dev-gabrielchaves/golang-learning/database"
+	"github.com/dev-gabrielchaves/golang-learning/handlers"
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
-	fmt.Println("Hello from GO! Let's goooooooo!!!")
+	// Connect to MongoDB
+	database.ConnectDB()
+
+	// Initialize Fiber
+	app := fiber.New()
+
+	// Routes
+	app.Get("/users", handlers.GetUsers)
+	app.Get("/users/:id", handlers.GetUser)
+	app.Post("/users", handlers.CreateUser)
+	app.Put("/users/:id", handlers.UpdateUser)
+	app.Delete("/users/:id", handlers.DeleteUser)
+
+	// Start server
+	log.Fatal(app.Listen(":3000"))
 }
