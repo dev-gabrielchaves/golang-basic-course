@@ -5,44 +5,33 @@ import (
 	"sync"
 )
 
-func reader(id int, wg *sync.WaitGroup) {
+func reader(id int, ch <-chan int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	fmt.Printf("Hello from reader %d!", id)
+	for {
+		val, ok := <-ch
+		if !ok {
+			fmt.Printf("Reader %d: channel closed\n", id)
+			return
+		}
+		fmt.Printf("Reader %d: %d\n", id, val)
+	}
 }
 
 func main() {
-	// Introducing go routines
-
-	// WaitGroup is used to wait for the program to finish executing of go routines
 	var wg sync.WaitGroup
+	ch := make(chan int)
 
-	// Add 1 to the WaitGroup
-	wg.Add(1)
+	wg.Add(3)
 
-	// As you can see, the go keyword is used to create a new go routine
-	// The go routine is a lightweight thread managed by the Go runtime
-	go func() {
-		// Defer the Done method of the WaitGroup
-		defer wg.Done()
-		fmt.Println("Hello from go routine!")
-	}()
+	go reader(1, ch, &wg)
+	go reader(2, ch, &wg)
+	go reader(3, ch, &wg)
 
-	// Doing the same thing again
-	wg.Add(1)
+	for i := 0; i < 100; i++ {
+		ch <- i
+	}
 
-	go func() {
-		// Defer the Done method of the WaitGroup
-		defer wg.Done()
-		fmt.Println("Hello from go routine!")
-	}()
+	close(ch)
 
-	// Call the reader function in a go routine
-	wg.Add(2)
-	go reader(1, &wg)
-	go reader(2, &wg)
-
-	// As you will notice, the output won't be in order!
-
-	// Wait for the go routines to finish
 	wg.Wait()
 }
